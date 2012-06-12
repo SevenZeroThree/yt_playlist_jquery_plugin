@@ -148,7 +148,7 @@ function Video(videoId, title, rating, mediaGroup, statistics) {
         block += '<a href="' + this.embedURL() + '?autoplay=1" class="fancy_video">';
         block += '<h3 class="yt_title">' + this.title() + '</h3>';
         block += '</a>';
-        block += '<span>' + this.description() + '</span>';
+        block += '<span class="yt_desc">' + this.description() + '</span>';
         block += '<span>' + this.ratingRatio() + '</span>';
         block += '</div>';
         return block;
