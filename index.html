@@ -1,8 +1,13 @@
 <html>
 	<head>
         <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="content/css/site.css" type="text/css" />
         <script src="Scripts/YouTube.js" type="text/javascript"></script>
-		<link rel="stylesheet" href="css/site.css" type="text/css" />
+		
+		<!-- FancyBox -->
+        <link href="Content/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+        <script src="Content/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+		
 		<style>
 			#video_content
 			{
@@ -12,13 +17,11 @@
 		</style>
 		<script>
 			$(document).ready(function () {
-				//YouTube('stihlusa', 4);
-				//$('body').YouTube({
-				//    username: 'stihlusa',
-				//    playlists: 4,
-				//    videos: 10
-				//});
-				$('body').YouTube();
+				$('body').YouTube({
+					username: 'stihlusa',
+					playlists: 5,
+					videos: 10
+				});
 			});
 		</script>
 	</head>

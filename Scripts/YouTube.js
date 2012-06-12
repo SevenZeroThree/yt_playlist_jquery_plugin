@@ -1,27 +1,5 @@
 ﻿var videoresults;
 $(document).ready(function () {
-    //var playlistResults;
-    //var videoResults;
-    
-    //// Get list of playlists for the user
-    //var username = 'stihlusa';
-    //var feedURL = 'https://gdata.youtube.com/feeds/api/users/';
-    //var results;
-    //var jsonURL = '';
-    //if (results > 0)
-    //    jsonURL = feedURL + username + '/playlists?' + results + '&v=2&alt=json';
-    //else
-    //    jsonURL = feedURL + username + '/playlists?v=2&alt=json';
-
-    //$.getJSON(jsonURL, function (data) {
-    //    var playlistIDs = '';
-    //    playlistIDs += '<ul class="bmenu">';
-    //    $.each(data.feed.entry, function (i, item) {
-    //        playlistIDs += '<li><span id="' + item.link[1].href.split('/')[3].split('=')[1] + '">' + item.title.$t + '</span></li>';
-    //    });
-    //    playlistIDs += '</ul>';
-    //    $(playlistIDs).appendTo('#playlist');
-    //});
     $('body').on('click', '.fancy_video', function (ev) {
         $.fancybox({
             href: this.href,
@@ -177,13 +155,6 @@ function Video(videoId, title, rating, mediaGroup, statistics) {
     }
 }
 
-
-//function YouTube(user, results) {
-//    if (results)
-//        GetPlaylists(user, results);
-//    else
-//        GetPlaylists(user);
-//};
 (function ($) {
     $.fn.YouTube = function (options) {
         var defaults = {
