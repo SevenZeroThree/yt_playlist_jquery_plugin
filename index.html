@@ -1,0 +1,39 @@
+<html>
+	<head>
+        <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+        <script src="Scripts/YouTube.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="css/site.css" type="text/css" />
+		<style>
+			#video_content
+			{
+				width: 1100px;
+				position: relative;
+			}
+		</style>
+		<script>
+			$(document).ready(function () {
+				//YouTube('stihlusa', 4);
+				//$('body').YouTube({
+				//    username: 'stihlusa',
+				//    playlists: 4,
+				//    videos: 10
+				//});
+				$('body').YouTube();
+			});
+		</script>
+	</head>
+	<body>
+		<div id="pagewrapper">
+			<div id="content">
+				<div id="video_content">
+					<div id="left_content">
+						<div id="playlist"></div>
+					</div>
+					<div id="right_content">
+						<div id="videos"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

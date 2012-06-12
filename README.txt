@@ -1,0 +1,1 @@
+Used to get the playlists for the supplied user.

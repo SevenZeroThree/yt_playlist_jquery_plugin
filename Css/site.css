@@ -1,0 +1,292 @@
+body
+{
+    font-size: .85em;
+    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+    color: #DEDEDE;
+    background: #333333;
+}
+h3
+{
+    font-size: 13px;
+    margin: 0;
+}
+header,
+footer,
+nav,
+section {
+    display: block;
+}
+
+/* Styles for page content
+-----------------------------------------------------------*/
+#pagewrapper
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1400px;
+    position: relative;
+}
+#content
+{
+    display: inline-block;
+}
+#right
+{
+    display: inline-block;
+    position: absolute;
+    width: 200px;
+}
+
+/* Styles for blur menu
+-----------------------------------------------------------*/
+header
+{
+    text-align: center;
+}
+.bmenu
+{
+    padding: 0;
+    margin: 0 0 10px 0;
+    
+}
+.benu:first-child
+{
+    
+}
+.bmenu a
+{
+    font-size: 50px;
+    margin-right: 25px;
+}
+.bmenu span
+{
+    font-size: 25px;
+}
+.bmenu a
+{
+    text-shadow: 0 0 3px #FFFFFF;
+}
+.bmenu span
+{
+    display: block;
+    text-shadow: 0 0 2px #FFFFFF;
+}
+.bmenu a, .bmenu span
+{
+    text-decoration: none;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.bmenu:hover a, .bmenu:hover span{
+    text-shadow: 0px 0px 5px #CCCCCC;
+}
+.bmenu a:hover, .bmenu span:hover{
+    color: #DEDEDE;
+    text-shadow: 0px 0px 3px #FFFFFF;
+    padding-left: 10px;
+}
+.bmenu a:hover
+{
+    padding-left: 10px;
+}
+.bmenu span:hover
+{
+    padding-left: 5px;
+}
+.bmenu li
+{
+    list-style-type: none;
+}
+
+/* Styles for twitter
+-----------------------------------------------------------*/
+.tweet
+{
+    margin-bottom: 10px;
+}
+.tweet a
+{
+    text-decoration: none;
+    color: inherit;
+}
+.tweet .txt
+{
+    color: #DEDEDE;
+    font-size: 12px;
+}
+.tweet .avatar
+{
+	float: left;
+	padding-right: 5px;
+}
+.tweet .user
+{
+    margin-bottom: 10px;
+}
+.tweet .time{
+	text-transform:uppercase;
+	font-size:10px;
+	color:#AAAAAA;
+	white-space:nowrap;
+}
+
+/* Styles for youtube
+-----------------------------------------------------------*/
+#left_content, #right_content
+{
+    display: inline-block;
+}
+#right_content
+{
+    width: 775px;
+    position: absolute;
+    margin-left: 10px;
+}
+#playlist
+{
+    width: 300px;
+}
+#player
+{
+    float: left;
+}
+#playlist span
+{
+    cursor: pointer;
+}
+#playlist div:hover
+{
+    background: #FFFFFF;
+}
+#videos
+{
+    display: inline-block;
+}
+#videos a
+{
+    color: #DEDEDE;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+#videos div
+{
+    display: inline-block;
+    width: 170px;
+    height: 253px;
+    padding: 10px;
+    vertical-align: top;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+#videos div p
+{
+    margin: 0;
+}
+#videos div span
+{
+    font-size: 10px;
+    line-height: 12px;
+    margin-top: 5px;
+    display: block;
+    overflow: hidden;
+}
+#videos div:hover
+{
+    box-shadow: -2px 2px 3px #000000;
+    background: #444444;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    right: 1px;
+    
+}
+#videos img
+{
+    cursor: pointer;
+}
+.video_time
+{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    font-size: 11px !important;
+    background: #000000;
+    padding: 0 2px;
+    border-radius: 3px;
+    display: inline-block;
+}
+.yt_title
+{
+    height: 35px;
+    overflow: hidden;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset 
+{
+    border:1px solid #ddd;
+    padding:0 1.4em 1.4em 1.4em;
+    margin:0 0 1.5em 0;
+}
+
+legend 
+{
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+textarea 
+{
+    min-height: 75px;
+}
+
+.editor-label 
+{
+    margin: 1em 0 0 0;
+}
+
+.editor-field 
+{
+    margin:0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
