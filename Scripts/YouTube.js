@@ -1,4 +1,6 @@
 ﻿var videoresults;
+var displayRatings;
+
 $(document).ready(function () {
     $('body').on('click', '.fancy_video', function (ev) {
         $.fancybox({
@@ -61,7 +63,7 @@ function Video(videoId, title, rating, mediaGroup, statistics) {
     var wtcURL = 'http://www.youtube.com/watch?v=';
     var embURL = 'http://www.youtube.com/embed/';
     var thumb = 'http://img.youtube.com/vi/';
-
+	
     this.id = videoId;
     this.timeInSeconds = mediaGroup.yt$duration.seconds;
     this.videoURL = function () {
@@ -98,10 +100,18 @@ function Video(videoId, title, rating, mediaGroup, statistics) {
     }
     this.ratingRatio = function () {
         if (this.likes() + this.dislikes() > 0)
-            return ((this.likes() / (this.likes() + this.dislikes())).toFixed(2) * 100) + '%';
+            return ((this.likes() / (this.likes() + this.dislikes())).toFixed(2) * 100);
+		else if (this.likes() == 0 && this.dislikes == 0)
+			return 0;
         else
             return 0;
     }
+	this.dislikeWidth = function () {
+		if (this.ratingRatio() > 0) {
+			return 100 - (this.ratingRatio() - 5);
+		}
+		return 0;
+	}
     this.length = function () {
         var hours = Math.floor(this.timeInSeconds / 3600);
         var minutes = Math.floor(this.timeInSeconds / 60);
@@ -144,12 +154,15 @@ function Video(videoId, title, rating, mediaGroup, statistics) {
         block += '<a href="' + this.embedURL() + '?autoplay=1" class="fancy_video">';
         block += '<img width="170px" height="120px" src="' + this.image() + '" alt="' + this.embedURL() + '" title="' + this.title() + '" />';
         block += '<span class="video_time">' + this.length() + '</span>';
-        block += '</a>';
-        block += '<a href="' + this.embedURL() + '?autoplay=1" class="fancy_video">';
         block += '<h3 class="yt_title">' + this.title() + '</h3>';
         block += '</a>';
         block += '<span class="yt_desc">' + this.description() + '</span>';
-        block += '<span>' + this.ratingRatio() + '</span>';
+		if (displayRatings) {
+			block += '<div class="rating">';
+			block += '<span class="likes" style="width: ' + this.ratingRatio() + '%">' + this.likes() + '</span>';
+			block += '<span class="dislikes" style="width: ' + this.dislikeWidth() + '%">' + this.dislikes() + '</span>';
+			block += '</div>';
+		}
         block += '</div>';
         return block;
     }
@@ -160,11 +173,13 @@ function Video(videoId, title, rating, mediaGroup, statistics) {
         var defaults = {
             username: 'stihlusa',
             playlists: 10,
-            videos: 10
+            videos: 10,
+			ratings: true
         };
         var options = $.extend(defaults, options);
 
         return this.each(function () {
+			displayRatings = options.ratings;
             GetPlaylists(options.username, options.playlists, options.videos);
         });
     };

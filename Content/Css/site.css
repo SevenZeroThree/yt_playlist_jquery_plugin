@@ -186,7 +186,7 @@ header
 {
     position: absolute;
     right: 5px;
-    bottom: 5px;
+    bottom: 40px;
     font-size: 11px !important;
     background: #000000;
     padding: 0 2px;
@@ -202,4 +202,34 @@ header
 .yt_desc
 {
     height: 50px;
+}
+.rating
+{
+	height: 10px !important;
+	width: 100% !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border-radius: 0 !important;
+	background: white !important;
+}
+.rating span
+{
+	display: inline-block !important;
+}
+.likes, .dislikes
+{
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.likes
+{
+	background: green;
+	float: left;
+	border-right: 1px solid white;
+}
+.dislikes
+{
+	background: red;
+	float: right;
+	border-left: 1px solid white;
 }
