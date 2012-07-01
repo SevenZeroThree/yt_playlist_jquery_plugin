@@ -20,16 +20,18 @@ function GetPlaylists(username, maxresults, maxvideos) {
         videoresults = maxvideos;
     var feedURL = 'https://gdata.youtube.com/feeds/api/users/';
     var jsonURL = '';
+
     if (maxresults)
         jsonURL = feedURL + username + '/playlists?v=2&max-results=' + maxresults + '&alt=json';
     else
         jsonURL = feedURL + username + '/playlists?v=2&alt=json';
+
     $.getJSON(jsonURL, function (data) {
         var playlistIDs = '';
         playlistIDs += '<ul class="bmenu">';
         $.each(data.feed.entry, function (i, item) {
             var newPlaylist = new Playlist(item);
-            playlistIDs += '<li><span id="' + item.link[1].href.split('/')[3].split('=')[1] + '">' + item.title.$t + '</span></li>';
+            playlistIDs += newPlaylist.playlistBlock();
         });
         playlistIDs += '</ul>';
         $(playlistIDs).appendTo('#playlist');
@@ -39,6 +41,11 @@ function GetVideos(playlistID) {
     var feedURL = 'http://gdata.youtube.com/feeds/api/playlists/';
     //var playListURL = 'http://gdata.youtube.com/feeds/api/playlists/' + playlistID + '?v=2&alt=json&callback=?';
     var playListURL = '';
+
+    // use start-index url parameter with max-results for paging functionality
+    // set to 1 for the first set of results
+    // 11 for the second
+    // ...
     if (videoresults)
         playListURL = feedURL + playlistID + '?v=2&max-results=' + videoresults + '&alt=json&callback=?';
     else
@@ -67,7 +74,7 @@ function Video(video) {
         this.videoURL = watchURL + this.id;
         this.embedURL = embedURL + this.id;
         this.author = video.author[0].name.$t;
-        this.uploaded = item.published.$t;
+        this.uploaded = video.published.$t;
         this.title = video.title.$t;
         this.description = video.media$group.media$description.$t;
         this.views = video.yt$statistics.viewCount;
@@ -112,7 +119,19 @@ function Video(video) {
 
 function Playlist(playlist) {
     if (playlist != null) {
+        this.id = playlist.yt$playlistId.$t;
+        this.title = playlist.title.$t;
 
+        this.playlistBlock = function () {
+            var block = '';
+            block += '<li>';
+            block += '<span id="' + this.id + '">';
+            block += playlist.title.$t;
+            block += '</span>';
+            block += '</li>';
+
+            return block;
+        }
     }
 }
 
