@@ -41,9 +41,12 @@ local.properties
 # User-specific files
 *.suo
 *.user
-*.sln.docstates
 
 # Build results
+/bin
+/obj
+Web.debug.config
+web.release.config
 **/[Dd]ebug/
 **/[Rr]elease/
 *_i.c
