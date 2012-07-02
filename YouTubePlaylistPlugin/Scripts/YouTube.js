@@ -1,5 +1,13 @@
-﻿var videoresults;
+﻿/*
+TODO:   Add BuildPager function to introduce true paging (eg list of pages (1, 2, 3, etc))
+*/
+
+var videoresults;
 var displayRatings;
+
+// Create global variables so we aren't passing these values over and over???
+var numberOfPlaylists;
+var videosPerPage;
 
 $(document).ready(function () {
     $('body').on('click', '.fancy_video', function (ev) {
@@ -9,22 +17,21 @@ $(document).ready(function () {
         });
         ev.preventDefault();
     });
+
+    // Add something like this for paging
     $('#playlist').on('click', 'span', function () {
-        $('#videos').html('');
-        $('iframe').attr('style', 'display: none');
-        GetVideos($(this).attr('id'));
+        GetVideos($(this).attr('id'), 1, $(this).attr('data-value'));
     });
 });
-function GetPlaylists(username, maxresults, maxvideos) {
-    if (maxvideos)
-        videoresults = maxvideos;
+
+function GetPlaylists(username) {
     var feedURL = 'https://gdata.youtube.com/feeds/api/users/';
     var jsonURL = '';
 
-    if (maxresults)
-        jsonURL = feedURL + username + '/playlists?v=2&max-results=' + maxresults + '&alt=json';
-    else
-        jsonURL = feedURL + username + '/playlists?v=2&alt=json';
+    jsonURL = feedURL + username + '/playlists?v=2&alt=json';
+
+    if (numberOfPlaylists)
+        jsonURL += '&max-results=' + numberOfPlaylists;
 
     $.getJSON(jsonURL, function (data) {
         var playlistIDs = '';
@@ -37,28 +44,34 @@ function GetPlaylists(username, maxresults, maxvideos) {
         $(playlistIDs).appendTo('#playlist');
     });
 }
-function GetVideos(playlistID) {
-    var feedURL = 'http://gdata.youtube.com/feeds/api/playlists/';
-    //var playListURL = 'http://gdata.youtube.com/feeds/api/playlists/' + playlistID + '?v=2&alt=json&callback=?';
-    var playListURL = '';
 
-    // use start-index url parameter with max-results for paging functionality
-    // set to 1 for the first set of results
-    // 11 for the second
-    // ...
-    if (videoresults)
-        playListURL = feedURL + playlistID + '?v=2&max-results=' + videoresults + '&alt=json&callback=?';
-    else
-        playListURL = feedURL + playlistID + '?v=2&alt=json&callback=?';
-    var videoURL = 'http://www.youtube.com/watch?v=';
+function GetVideos(playlistId, startIndex, numberOfVideosInPlaylist) {
+    $('#videos').html('');
+    var feedURL = 'http://gdata.youtube.com/feeds/api/playlists/';
+    var playListURL = feedURL + playlistId + '?v=2&alt=json&callback=?';
+
+    if (videosPerPage && startIndex)
+        playListURL += '&start-index=' + startIndex + '&max-results=' + videosPerPage;
+
     $.getJSON(playListURL, function (data) {
         var videos = "";
+        var count = 0;
         $.each(data.feed.entry, function (i, item) {
             if (item != null) {
+                count++;
                 var newVideo = new Video(item);
                 videos += newVideo.videoBlock();
             }
         });
+        // Append next/prev buttons
+        videos += '<div>';
+        if (startIndex != 1)
+            videos += '<input type="button" value="Previous" onclick=\'GetVideos(\"' + playlistId + '\", ' + (startIndex - videosPerPage) + ', ' + numberOfVideosInPlaylist + ')\' />';
+        if (numberOfVideosInPlaylist > videosPerPage)
+            if (count == videosPerPage)
+                videos += '<input type="button" value="Next" onclick=\'GetVideos(\"' + playlistId + '\", ' + (startIndex + videosPerPage) + ', ' + numberOfVideosInPlaylist + ')\' />';
+
+        videos += '</div>';
         $(videos).appendTo('#videos');
     });
 }
@@ -119,13 +132,15 @@ function Video(video) {
 
 function Playlist(playlist) {
     if (playlist != null) {
+
         this.id = playlist.yt$playlistId.$t;
         this.title = playlist.title.$t;
+        this.numberOfVideos = playlist.yt$countHint.$t;
 
         this.playlistBlock = function () {
             var block = '';
             block += '<li>';
-            block += '<span id="' + this.id + '">';
+            block += '<span id="' + this.id + '" data-value="' + this.numberOfVideos + '">';
             block += playlist.title.$t;
             block += '</span>';
             block += '</li>';
@@ -177,15 +192,20 @@ function ConvertTime(sec) {
     $.fn.YouTube = function (options) {
         var defaults = {
             username: 'stihlusa',
-            playlists: 10,
-            videos: 10,
+            numberOfPlaylists: 10,
+            videosPerPage: 10,
 			ratings: true
         };
         var options = $.extend(defaults, options);
 
         return this.each(function () {
+            // Set Global Variables
 			displayRatings = options.ratings;
-            GetPlaylists(options.username, options.playlists, options.videos);
+            numberOfPlaylists = options.numberOfPlaylists;
+            videosPerPage = options.videosPerPage;
+
+            // Get the playlists
+            GetPlaylists(options.username);
         });
     };
 })(jQuery);
