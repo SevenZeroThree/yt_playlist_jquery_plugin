@@ -28,6 +28,7 @@ function GetPlaylists(username, maxresults, maxvideos) {
         var playlistIDs = '';
         playlistIDs += '<ul class="bmenu">';
         $.each(data.feed.entry, function (i, item) {
+            var newPlaylist = new Playlist(item);
             playlistIDs += '<li><span id="' + item.link[1].href.split('/')[3].split('=')[1] + '">' + item.title.$t + '</span></li>';
         });
         playlistIDs += '</ul>';
@@ -47,11 +48,7 @@ function GetVideos(playlistID) {
         var videos = "";
         $.each(data.feed.entry, function (i, item) {
             if (item != null) {
-                var newVideo = new Video(item.link[1].href.split('/')[6],
-                        item.title.$t,
-                        item.yt$rating,
-                        item.media$group,
-                        item.yt$statistics);
+                var newVideo = new Video(item);
                 videos += newVideo.videoBlock();
             }
         });
@@ -59,114 +56,103 @@ function GetVideos(playlistID) {
     });
 }
 
-function Video(videoId, title, rating, mediaGroup, statistics) {
-    var wtcURL = 'http://www.youtube.com/watch?v=';
-    var embURL = 'http://www.youtube.com/embed/';
+function Video(video) {
+    var watchURL = 'http://www.youtube.com/watch?v=';
+    var embedURL = 'http://www.youtube.com/embed/';
     var thumb = 'http://img.youtube.com/vi/';
-	
-    this.id = videoId;
-    this.timeInSeconds = mediaGroup.yt$duration.seconds;
-    this.videoURL = function () {
-        return wtcURL + this.id;
-    }
-    this.embedURL = function () {
-        return embURL + this.id;
-    }
-    this.image = function () {
-        return thumb + this.id + '/hqdefault.jpg';
-    }
-    this.title = function () {
-        if (title.indexOf('\"') != -1)
-            title = title.replace('\"', '');
-        return title;
-    }
-    this.description = function () {
-        return mediaGroup.media$description.$t;
-    }
-    this.views = function () {
-        statistics.viewCount;
-    }
-    this.likes = function () {
-        if (rating != null)
-            return parseInt(rating.numLikes);
-        else
-            return 0;
-    }
-    this.dislikes = function () {
-        if (rating != null)
-            return parseInt(rating.numDislikes);
-        else
-            return 0;
-    }
-    this.ratingRatio = function () {
-        if (this.likes() + this.dislikes() > 0)
-            return ((this.likes() / (this.likes() + this.dislikes())).toFixed(2) * 100);
-		else if (this.likes() == 0 && this.dislikes == 0)
-			return 0;
-        else
-            return 0;
-    }
-	this.dislikeWidth = function () {
-		if (this.ratingRatio() > 0) {
-			return 100 - (this.ratingRatio() - 5);
-		}
-		return 0;
-	}
-    this.length = function () {
-        var hours = Math.floor(this.timeInSeconds / 3600);
-        var minutes = Math.floor(this.timeInSeconds / 60);
-        var seconds = this.timeInSeconds % 60;
-        var time = '';
 
-        if (hours > 0) {
-            minutes -= (hours * 60);
+    if (video != null) {
+        this.id = video.link[1].href.split('/')[6];
+        this.image = thumb + this.id + '/hqdefault.jpg';
+        this.videoURL = watchURL + this.id;
+        this.embedURL = embedURL + this.id;
+        this.author = video.author[0].name.$t;
+        this.uploaded = item.published.$t;
+        this.title = video.title.$t;
+        this.description = video.media$group.media$description.$t;
+        this.views = video.yt$statistics.viewCount;
+
+        if (video.yt$rating != null) {
+            this.likes = video.yt$rating.numLikes;
+            this.dislikes = video.yt$rating.numDislikes;
+
+            this.likeRatio = function () {
+                if (this.likes + this.dislikes > 0)
+                    return ((parseInt(this.likes) / (parseInt(this.likes) + parseInt(this.dislikes))).toFixed(2) * 100) - 1;
+                else
+                    return 0;
+            }
+            this.dislikeDisplay = this.dislikes == 1 ? this.dislikes + " dislike" : this.dislikes + " dislikes";
+            this.likeDisplay = this.likes == 1 ? this.likes + " like" : this.likes + " likes";
         }
 
-        // Format With Leading Zeros
-        if (minutes < 10 && hours > 0)
-            minutes = '0' + minutes;
-        if (seconds < 10)
-            seconds = '0' + seconds;
+        this.length = ConvertTime(video.media$group.yt$duration.seconds);
 
-        // Add Semicolons Where Needed
-        if (hours > 0) {
-            time += hours;
+        this.videoBlock = function () {
+            var block = '';
+            block += '<div class="video">';
+            block += '<a href="' + this.embedURL + '?autoplay=1" class="fancy_video">';
+            block += '<img width="170px" height="120px" src="' + this.image + '" alt="' + this.embedURL + '" title="' + this.title + '" />';
+            block += '<span class="video_time">' + this.length + '</span>';
+            block += '<h3 class="yt_title">' + this.title + '</h3>';
+            block += '</a>';
+            block += '<span class="yt_desc">' + this.description + '</span>';
+            if (displayRatings && video.yt$rating != null && (this.likes > 0 || this.dislikes > 0)) {
+                block += '<div class="rating">';
+                block += '<span class="likes" style="width: ' + this.likeRatio() + '%"></span>';
+                block += '<span class="dislikes" style="width: ' + (99 - this.likeRatio()) + '%"></span>';
+                block += '<span style="width: 100%; height: 12px;">' + this.likeDisplay + ", " + this.dislikeDisplay + '</span>';
+                block += '</div>';
+            }
+            block += '</div>';
+            return block;
         }
-        if (minutes > 0) {
-            if (hours > 0)
-                time += ':' + minutes;
-            else
-                time += minutes;
-        }
-        if (seconds > 0) {
-            if (minutes > 0)
-                time += ':' + seconds;
-            else
-                time += '0:' + seconds;
-        }
-        else
-            time += ':00';
-        return time;
-    }
-    this.videoBlock = function () {
-        var block = '';
-        block += '<div>';
-        block += '<a href="' + this.embedURL() + '?autoplay=1" class="fancy_video">';
-        block += '<img width="170px" height="120px" src="' + this.image() + '" alt="' + this.embedURL() + '" title="' + this.title() + '" />';
-        block += '<span class="video_time">' + this.length() + '</span>';
-        block += '<h3 class="yt_title">' + this.title() + '</h3>';
-        block += '</a>';
-        block += '<span class="yt_desc">' + this.description() + '</span>';
-		if (displayRatings) {
-			block += '<div class="rating">';
-			block += '<span class="likes" style="width: ' + this.ratingRatio() + '%">' + this.likes() + '</span>';
-			block += '<span class="dislikes" style="width: ' + this.dislikeWidth() + '%">' + this.dislikes() + '</span>';
-			block += '</div>';
-		}
-        block += '</div>';
-        return block;
     }
 }
+
+function Playlist(playlist) {
+    if (playlist != null) {
+
+    }
+}
+
+function ConvertTime(sec) {
+    var time = '';
+
+    var hours = Math.floor(sec / 3600);
+    var minutes = Math.floor(sec / 60);
+    var seconds = sec % 60;
+
+    if (hours > 0) {
+        minutes %= 60;
+        time += hours;
+    }
+
+    // Format With Leading Zeros
+    if (minutes < 10 && hours > 0)
+        minutes = '0' + minutes;
+    if (seconds < 10)
+        seconds = '0' + seconds;
+
+    // Add Semicolons Where Needed
+    if (minutes > 0) {
+        if (hours > 0)
+            time += ':' + minutes;
+        else
+            time += minutes;
+    }
+
+    if (seconds > 0) {
+        if (minutes > 0)
+            time += ':' + seconds;
+        else
+            time += '0:' + seconds;
+    }
+    else
+        time += ':00';
+
+    return time;
+} 
 
 (function ($) {
     $.fn.YouTube = function (options) {
