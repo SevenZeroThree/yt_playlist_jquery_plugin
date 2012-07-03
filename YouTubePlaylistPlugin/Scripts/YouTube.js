@@ -2,14 +2,17 @@
 TODO:   Add BuildPager function to introduce true paging (eg list of pages (1, 2, 3, etc))
 */
 
-var videoresults;
 var displayRatings;
 
 // Create global variables so we aren't passing these values over and over???
 var numberOfPlaylists;
 var videosPerPage;
 
+var currentPlaylistId;
+var videosInCurrentPlaylist;
+
 $(document).ready(function () {
+
     $('body').on('click', '.fancy_video', function (ev) {
         $.fancybox({
             href: this.href,
@@ -18,9 +21,14 @@ $(document).ready(function () {
         ev.preventDefault();
     });
 
-    // Add something like this for paging
     $('#playlist').on('click', 'span', function () {
-        GetVideos($(this).attr('id'), 1, $(this).attr('data-value'));
+        currentPlaylistId = $(this).attr('id');
+        videosInCurrentPlaylist = $(this).attr('data-value');
+        GetVideos(1);
+    });
+
+    $('#videos').on('click', 'span', function () {
+        GetVideos($(this).attr('start-index'));
     });
 });
 
@@ -45,13 +53,13 @@ function GetPlaylists(username) {
     });
 }
 
-function GetVideos(playlistId, startIndex, numberOfVideosInPlaylist) {
+function GetVideos(p_startIndex) {
     $('#videos').html('');
     var feedURL = 'http://gdata.youtube.com/feeds/api/playlists/';
-    var playListURL = feedURL + playlistId + '?v=2&alt=json&callback=?';
+    var playListURL = feedURL + currentPlaylistId + '?v=2&alt=json&callback=?';
 
-    if (videosPerPage && startIndex)
-        playListURL += '&start-index=' + startIndex + '&max-results=' + videosPerPage;
+    if (videosPerPage && p_startIndex)
+        playListURL += '&start-index=' + p_startIndex + '&max-results=' + videosPerPage;
 
     $.getJSON(playListURL, function (data) {
         var videos = "";
@@ -63,17 +71,66 @@ function GetVideos(playlistId, startIndex, numberOfVideosInPlaylist) {
                 videos += newVideo.videoBlock();
             }
         });
-        // Append next/prev buttons
-        videos += '<div>';
-        if (startIndex != 1)
-            videos += '<input type="button" value="Previous" onclick=\'GetVideos(\"' + playlistId + '\", ' + (startIndex - videosPerPage) + ', ' + numberOfVideosInPlaylist + ')\' />';
-        if (numberOfVideosInPlaylist > videosPerPage)
-            if (count == videosPerPage)
-                videos += '<input type="button" value="Next" onclick=\'GetVideos(\"' + playlistId + '\", ' + (startIndex + videosPerPage) + ', ' + numberOfVideosInPlaylist + ')\' />';
 
+        // Append next/prev buttons
+        videos += '<div id="pager">';
+        videos += BuildPager(p_startIndex, count);
         videos += '</div>';
         $(videos).appendTo('#videos');
     });
+}
+
+function BuildPager(p_startIndex, p_videosOnPage) {
+    var builder = '';
+
+    // Determine how many pages there should be
+    var pages = Math.ceil(videosInCurrentPlaylist / videosPerPage);
+
+    if (pages > 1) {
+        // Build Prev button
+        if (p_startIndex != 1)
+            builder += '<span class="button" start-index="' + (p_startIndex - videosPerPage) + '">Previous</span>';
+
+        var newActivePage = ActivePage(p_startIndex);
+        
+        // Build numbered list
+        for (var i = 1; i <= pages; i++) {
+            // Determine current page here?
+            if (i == newActivePage)
+                builder += '<span class="active">';
+            else
+                builder += '<span start-index="' + GetStartIndex(i, p_startIndex) + '">';
+            builder += i + '</span>';
+        }
+        
+        // Build Next button
+        // We are NOT on the first page
+        if (videosInCurrentPlaylist > videosPerPage)
+            if (p_videosOnPage == videosPerPage)
+                builder += '<span class="button" start-index="' + (parseInt(p_startIndex) + parseInt(videosPerPage)) + '">Next</span>';
+    }
+
+    return builder;
+}
+
+function ActivePage(p_startIndex) {
+    var num = parseInt(p_startIndex) + parseInt(videosPerPage);
+    var count = 0;
+    do {
+        num -= videosPerPage;
+        count++;
+    } while (num != 1);
+
+    return count;
+}
+
+function GetStartIndex(p_page, p_startIndex) {
+//    p_startIndex + videosPerPage
+//    if (p_page == 1)
+//        return 1;
+//    else
+//        return (p_page * videosPerPage) - 1;
+    return 1;
 }
 
 function Video(video) {

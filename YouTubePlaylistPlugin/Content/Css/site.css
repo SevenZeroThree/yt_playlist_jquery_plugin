@@ -234,3 +234,29 @@ header
 	float: right;
 	border-left: 1px solid white;
 }
+
+#pager span
+{
+    display: inline-block;
+    width: 25px;   
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+#pager span.active
+{
+    border: 1px solid #000000;
+    background: #FFFFFF;
+    cursor: default !important;
+    border-radius: 2px;  
+}
+
+#pager .button
+{
+    width: 60px;
+    background: #CCCCCC;
+    border: 1px solid #0c0c0c;
+    border-radius: 2px;   
+}
