@@ -37,73 +37,6 @@ section {
     width: 200px;
 }
 
-/* Styles for blur menu
------------------------------------------------------------*/
-header
-{
-    text-align: center;
-}
-.bmenu
-{
-    padding: 0;
-    margin: 0 0 10px 0;
-    
-}
-.benu:first-child
-{
-    
-}
-.bmenu a
-{
-    font-size: 50px;
-    margin-right: 25px;
-}
-.bmenu span
-{
-    font-size: 25px;
-}
-.bmenu a
-{
-    text-shadow: 0 0 3px #333333;
-}
-.bmenu span
-{
-    display: block;
-    text-shadow: 0 0 2px #333333;
-}
-.bmenu a, .bmenu span
-{
-    text-decoration: none;
-    color: transparent;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-.bmenu:hover a, .bmenu:hover span{
-    text-shadow: 0px 0px 5px #333333;
-}
-.bmenu a:hover, .bmenu span:hover{
-    color: #333333;
-    text-shadow: 0px 0px 3px #333333;
-    padding-left: 10px;
-}
-.bmenu a:hover
-{
-    padding-left: 10px;
-}
-.bmenu span:hover
-{
-    padding-left: 5px;
-}
-.bmenu li
-{
-    list-style-type: none;
-}
-
 /* Styles for youtube
 -----------------------------------------------------------*/
 #left_content, #right_content
@@ -116,7 +49,7 @@ header
     position: absolute;
     margin-left: 10px;
 }
-#playlist
+#playlists
 {
     width: 300px;
 }
@@ -124,11 +57,11 @@ header
 {
     float: left;
 }
-#playlist span
+#playlists span
 {
     cursor: pointer;
 }
-#playlist div:hover
+#playlists div:hover
 {
     background: #FFFFFF;
 }

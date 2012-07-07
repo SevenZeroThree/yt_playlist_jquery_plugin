@@ -21,7 +21,7 @@ $(document).ready(function () {
         ev.preventDefault();
     });
 
-    $('#playlist').on('click', 'span', function () {
+    $('#playlists').on('click', 'span', function () {
         currentPlaylistId = $(this).attr('id');
         videosInCurrentPlaylist = $(this).attr('data-value');
         GetVideos(1);
@@ -43,13 +43,13 @@ function GetPlaylists(username) {
 
     $.getJSON(jsonURL, function (data) {
         var playlistIDs = '';
-        playlistIDs += '<ul class="bmenu">';
+        playlistIDs += '<ul>';
         $.each(data.feed.entry, function (i, item) {
             var newPlaylist = new Playlist(item);
             playlistIDs += newPlaylist.playlistBlock();
         });
         playlistIDs += '</ul>';
-        $(playlistIDs).appendTo('#playlist');
+        $(playlistIDs).appendTo('#playlists');
     });
 }
 
@@ -171,9 +171,9 @@ function Video(video) {
             block += '<span class="yt_desc">' + this.description + '</span>';
             if (displayRatings && video.yt$rating != null && (this.likes > 0 || this.dislikes > 0)) {
                 block += '<div class="rating">';
-                block += '<span class="likes" style="width: ' + this.likeRatio() + '%"></span>';
+                block += '<span class="likes" style="width: ' + (this.likeRatio() - 1) + '%"></span>';
                 block += '<span class="dislikes" style="width: ' + (99 - this.likeRatio()) + '%"></span>';
-                block += '<span style="width: 100%; height: 12px;">' + this.likeDisplay + ", " + this.dislikeDisplay + '</span>';
+                block += '<span style="width: 100%; height: 12px; clear: both;">' + this.likeDisplay + ", " + this.dislikeDisplay + '</span>';
                 block += '</div>';
             }
             block += '</div>';
