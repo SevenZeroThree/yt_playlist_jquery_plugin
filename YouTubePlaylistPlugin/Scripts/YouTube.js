@@ -125,12 +125,7 @@ function ActivePage(p_startIndex) {
 }
 
 function GetStartIndex(p_page, p_startIndex) {
-//    p_startIndex + videosPerPage
-//    if (p_page == 1)
-//        return 1;
-//    else
-//        return (p_page * videosPerPage) - 1;
-    return 1;
+    return ((p_page - 1) * videosPerPage) + 1;
 }
 
 function Video(video) {
