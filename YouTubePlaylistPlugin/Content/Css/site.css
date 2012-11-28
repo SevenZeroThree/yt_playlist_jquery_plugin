@@ -17,38 +17,6 @@ section {
     display: block;
 }
 
-/* Styles for page content
------------------------------------------------------------*/
-#pagewrapper
-{
-    margin-left: auto;
-    margin-right: auto;
-    width: 1400px;
-    position: relative;
-}
-#content
-{
-    display: inline-block;
-}
-#right
-{
-    display: inline-block;
-    position: absolute;
-    width: 200px;
-}
-
-/* Styles for youtube
------------------------------------------------------------*/
-#left_content, #right_content
-{
-    display: inline-block;
-}
-#right_content
-{
-    width: 775px;
-    position: absolute;
-    margin-left: 10px;
-}
 #playlists
 {
     width: 300px;
@@ -74,13 +42,7 @@ section {
     color: #333333;
     text-decoration: none;
     cursor: pointer;
-    position: relative;
     display: inline-block;
-}
-#videos a:hover
-{
-    color: #F37A1F !important;
-    text-decoration: underline;
 }
 #videos .video
 {
@@ -123,7 +85,7 @@ section {
 {
     position: absolute;
     right: 5px;
-    bottom: 40px;
+    bottom: 5px;
     font-size: 11px !important;
     background: #000000;
     padding: 0 2px;
@@ -192,4 +154,9 @@ section {
     background: #CCCCCC;
     border: 1px solid #0c0c0c;
     border-radius: 2px;   
+}
+
+.video-img
+{
+    position: relative;
 }
