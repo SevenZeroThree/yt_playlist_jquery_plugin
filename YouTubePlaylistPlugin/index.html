@@ -8,36 +8,22 @@
         <link href="Content/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
         <script src="Content/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 		
-		<style>
-			#video_content
-			{
-				width: 1100px;
-				position: relative;
-			}
-		</style>
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function () {
 				$('body').YouTube({
-					username: 'stihlusa',
+				    username: 'stihlusa',
 					numberOfPlaylists: '',
 					videosPerPage: 8,
-					ratings: true
+					ratings: true,
+                    titleCharacters: 50,
+                    description: false,
+					descriptionCharacters: 100
 				});
 			});
 		</script>
 	</head>
 	<body>
-		<div id="pagewrapper">
-			<div id="content">
-				<div id="video_content">
-					<div id="left_content">
-						<div id="playlists"></div>
-					</div>
-					<div id="right_content">
-						<div id="videos"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div id="playlists"></div>
+        <div id="videos"></div>
 	</body>
 </html>
