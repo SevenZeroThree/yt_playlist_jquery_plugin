@@ -379,7 +379,7 @@ function formatDate(time) {
             username: 'stihlusa',
             numberOfPlaylists: 10,
             videosPerPage: 10,
-			ratings: false,
+			ratings: true,
             titleCharacters: 100,
             description: true,
             descriptionCharacters: 200,
