@@ -9,17 +9,19 @@
         <script src="Content/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 		
 		<script type="text/javascript">
-			$(document).ready(function () {
-				$('body').YouTube({
-				    username: 'stihlusa',
-					numberOfPlaylists: 10,
-					videosPerPage: 8,
-					ratings: true,
-                    titleCharacters: 50,
-                    description: true,
-					descriptionCharacters: 100
-				});
-			});
+		    $(document).ready(function () {
+		        $('#playlists').Playlists({
+                    username: 'stihlusa',
+                    numberOfPlaylists: 10
+                });
+                $('#videos').Videos({
+		        	videosPerPage: 8,
+		        	ratings: true,
+		            titleCharacters: 50,
+		            description: true,
+                    descriptionCharacters: 100
+                });
+		    });
 		</script>
 	</head>
 	<body>
