@@ -1,4 +1,4 @@
-Used to get the playlists for the supplied user.
+Used to get the playlists for the supplied user, and the associated videos for those playlists.
 
 Plugin Parameters:
 
