@@ -15,11 +15,14 @@
                     numberOfPlaylists: 10
                 });
                 $('#videos').Videos({
-		        	videosPerPage: 8,
-		        	ratings: true,
-		            titleCharacters: 50,
-		            description: true,
-                    descriptionCharacters: 100
+                    videosPerPage: 8,
+                    icon: {
+                        show: false,
+                        ratings: true,
+                        description: true,
+                        descriptionCharacters: 100
+                    },
+		            titleCharacters: 50
                 });
 		    });
 		</script>

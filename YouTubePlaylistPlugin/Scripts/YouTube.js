@@ -10,7 +10,7 @@ var showDescription;
 var titleCharacters = 0;
 var showViews;
 var hdOnly;
-var showList;
+var showIcons;
 
 var $playlistElement;
 var $videoElement;
@@ -87,7 +87,7 @@ var youTube = function () {
             var videos = "";
             var count = 0;
 
-            if (showList)
+            if (!showIcons)
                 videos += '<ul>';
 
             // $.each(index, value)
@@ -97,14 +97,14 @@ var youTube = function () {
 
                     var newVideo = new video(item);
 
-                    if (showList)
+                    if (!showIcons)
                         videos += newVideo.listBlock();
                     else
                         videos += newVideo.videoBlock();
                 }
             });
 
-            if (showList)
+            if (!showIcons)
                 videos += '</ul>';
 
             // Append next/prev buttons
@@ -238,49 +238,57 @@ var youTube = function () {
 
             // Add necessary above information to the video block
             // USE KNOCKOUT FOR TEMPLATE??????
-            this.videoBlock = function () {
-                var block = '';
-                block += '<div class="video">';
-                block += '<a href="' + this.embedURL + '?autoplay=1" class="fancy_video">';
-                block += '<div class="video-img">';
-                block += '<img width="170px" height="120px" src="' + this.image + '" alt="' + this.embedURL + '" title="' + this.title + '" />';
-                block += '<span class="video_time">' + this.length + '</span>';
-                block += '</div>';
-                block += '<h3 class="yt_title">' + this.title + '</h3>';
 
-                if (showViews) {
-                    block += '<span>' + formatViews(this.views) + '</span>';
-                }
+            if (showIcons) {
+                this.videoBlock = function () {
+                    var $block;
+                    var block = '';
+                    //$block += $block('<div>');
 
-                block += '<span>' + user + ' | ' + formatDate(this.published) + '</span>';
-                block += '</a>';
-
-                if (showDescription) {
-                    block += '<span class="yt_desc">' + this.description + '</span>';
-                }
-
-                if (displayRatings && video.yt$rating != null && (this.likes > 0 || this.dislikes > 0)) {
-                    block += '<div class="rating">';
-                    block += '<span class="likes" style="width: ' + (this.likeRatio() - 1) + '%"></span>';
-                    block += '<span class="dislikes" style="width: ' + (99 - this.likeRatio()) + '%"></span>';
-                    block += '<span style="width: 100%; height: 12px; clear: both;">' + this.likeDisplay + ", " + this.dislikeDisplay + '</span>';
+                    block += '<div class="video">';
+                    block += '<a href="' + this.embedURL + '?autoplay=1" class="fancy_video">';
+                    block += '<div class="video-img">';
+                    block += '<img width="170px" height="120px" src="' + this.image + '" alt="' + this.embedURL + '" title="' + this.title + '" />';
+                    block += '<span class="video_time">' + this.length + '</span>';
                     block += '</div>';
-                }
+                    block += '<h3 class="yt_title">' + this.title + '</h3>';
 
-                block += '</div>';
-                return block;
+                    if (showViews) {
+                        block += '<span>' + formatViews(this.views) + '</span>';
+                    }
+
+                    block += '<span>' + user + ' | ' + formatDate(this.published) + '</span>';
+                    block += '</a>';
+
+                    if (showDescription) {
+                        block += '<span class="yt_desc">' + this.description + '</span>';
+                    }
+
+                    if (displayRatings && video.yt$rating != null && (this.likes > 0 || this.dislikes > 0)) {
+                        block += '<div class="rating">';
+                        block += '<span class="likes" style="width: ' + (this.likeRatio() - 1) + '%"></span>';
+                        block += '<span class="dislikes" style="width: ' + (99 - this.likeRatio()) + '%"></span>';
+                        block += '<span style="width: 100%; height: 12px; clear: both;">' + this.likeDisplay + ", " + this.dislikeDisplay + '</span>';
+                        block += '</div>';
+                    }
+
+                    block += '</div>';
+                    return $block;
+                }
             }
 
-            this.listBlock = function () {
-                var item = '';
+            if (!showIcons) {
+                this.listBlock = function () {
+                    var item = '';
 
-                item += '<li>';
-                item += '<a href="' + this.embedURL + '?autoplay=1" class="fancy_video">';
-                item += '<h3 class="yt_title">' + this.title + '</h3>';
-                item += '</a>';
-                item += '</li>';
+                    item += '<li>';
+                    item += '<a href="' + this.videoURL + '" target="_blank">';
+                    item += '<h3 class="yt_title">' + this.title + '</h3>';
+                    item += '</a>';
+                    item += '</li>';
 
-                return item;
+                    return item;
+                }
             }
         }
     }
@@ -402,10 +410,6 @@ $(document).ready(function () {
             // Set Global Variables
             user = settings.username;
             numberOfPlaylists = settings.numberOfPlaylists;
-
-            // Get the playlists
-            //youTube.getPlaylists(user);
-            //GetPlaylists(user);
         });
         $playlistElement = this;
         youTube.getPlaylists(user, $playlistElement);
@@ -414,13 +418,15 @@ $(document).ready(function () {
     $.fn.Videos = function (options) {
         var defaults = {
             videosPerPage: 10,
-			ratings: true,
             titleCharacters: 100,
-            description: true,
-            descriptionCharacters: 200,
-            views: true,
             hdOnly: false,
-            list: false
+            icon: {
+                show: false,
+                ratings: true,
+                description: true,
+                descriptionCharacters: 200,
+                views: true
+            }
         };
         var settings = $.extend(defaults, options);
 
@@ -428,8 +434,8 @@ $(document).ready(function () {
             // Set Global Variables
 			displayRatings = settings.ratings;
             videosPerPage = settings.videosPerPage;
-            showDescription = settings.description;
-            showViews = settings.views;
+            showDescription = settings.icon.description;
+            showViews = settings.icon.views;
 
             if (settings.titleCharacters != '') {
                 titleCharacters = settings.titleCharacters;
@@ -441,14 +447,9 @@ $(document).ready(function () {
 
             hdOnly = settings.hdOnly;
 
-            showList = settings.list;
-
-            // Get the playlists
-            //youTube.getVideos(1);
+            showIcons = settings.icon.show;
         });
         $videoElement = this;
-        // Get the videos
-        youTube.getVideos(1, $videoElement);
     };
 
 })(jQuery);
