@@ -16,11 +16,6 @@ nav,
 section {
     display: block;
 }
-
-#playlists
-{
-    width: 300px;
-}
 #player
 {
     float: left;
@@ -35,7 +30,8 @@ section {
 }
 #videos
 {
-    
+     width: 75%;
+     float: left;   
 }
 #videos a
 {
@@ -44,29 +40,13 @@ section {
     cursor: pointer;
     display: inline-block;
 }
-#videos .video
-{
-    display: inline-block;
-    width: 170px;
-    height: 260px;
-    padding: 10px;
-    vertical-align: top;
-    overflow: hidden;
-	border-radius: 5px;
-}
+
 #videos .video p
 {
     margin: 0;
 }
-#videos .video span
-{
-    font-size: 10px;
-    line-height: 12px;
-    margin-top: 5px;
-    display: block;
-    overflow: hidden;
-}
-#videos .video:hover
+
+#videos .video:hover, #playlists li:hover
 {
     box-shadow: -5px 5px 10px #555555;
     background: #FFFFFF;
@@ -92,19 +72,6 @@ section {
     border-radius: 3px;
     display: inline-block;
 	color: #DEDEDE;
-}
-.yt_title
-{
-    height: 35px;
-    overflow: hidden;
-}
-.yt_desc
-{
-    height: 50px;
-}
-.rating
-{
-
 }
 .rating span
 {
@@ -160,3 +127,81 @@ section {
 {
     position: relative;
 }
+
+#playlists ul
+{
+    list-style-type: none;
+}
+
+#playlists ul span
+{
+    display: block;
+}
+
+#playlists li
+{
+    display: inline-block;
+    width: 200px;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+#playlists
+{
+    width: 25%;
+    float: right;
+}
+
+/***************** THEME A  **********************/
+
+.video[data-theme="a"]
+{
+    clear: both;
+    margin: 10px 0;
+    max-width: 1000px;
+}
+
+.video[data-theme="a"] h2
+{
+    margin: 0;
+    font-weight: normal;
+}
+
+.video[data-theme="a"] span
+{
+    display: block;
+}
+
+.video[data-theme="a"] > a > div
+{
+    
+}
+
+.video[data-theme="a"] .video-img
+{
+    float: left;
+    margin-right: 20px;
+}
+
+.video[data-theme="a"] .video-details
+{
+    padding: 20px;
+}
+
+.video-count
+{
+    font-size: 11px !important;
+    background: #000000;
+    padding: 0 2px;
+    border-radius: 3px;
+    display: inline-block;
+	color: #DEDEDE;
+    position: absolute;
+    top: 50%;
+    right: 25%;
+}
+
+
+
+/***************** \THEME A  **********************/

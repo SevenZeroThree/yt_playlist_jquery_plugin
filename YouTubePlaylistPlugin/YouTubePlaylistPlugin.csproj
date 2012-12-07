@@ -61,7 +61,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Css\site.css" />
+    <Content Include="Content\Css\jquery.youtube.css" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_loading.gif" />
     <Content Include="Content\fancybox\fancybox_sprite.png" />
@@ -77,7 +77,7 @@
     <Content Include="test.html" />
     <Content Include="index.html" />
     <Content Include="Scripts\test.js" />
-    <Content Include="Scripts\YouTube.js" />
+    <Content Include="Scripts\jquery.youtube.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

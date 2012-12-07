@@ -1,8 +1,8 @@
 <html>
 	<head>
         <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-		<link rel="stylesheet" href="content/css/site.css" type="text/css" />
-        <script src="Scripts/YouTube.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="content/css/jquery.youtube.css" type="text/css" />
+        <script src="Scripts/jquery.youtube.js" type="text/javascript"></script>
 		
 		<!-- FancyBox -->
         <link href="Content/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
@@ -10,15 +10,20 @@
 		
 		<script type="text/javascript">
 		    $(document).ready(function () {
-		        $('#playlists').Playlists({
-                    username: 'stihlusa',
-                    numberOfPlaylists: 10
+		        $.youtube.username = 'stihlusa';
+		        $.youtube.theme = 'a';
+
+		        $('#playlists').playlists({
+                    numberOfPlaylists: 10,
+                    thumbnail: {
+                        show: true
+                    }
                 });
-                $('#videos').Videos({
+                $('#videos').videos({
                     videosPerPage: 8,
-                    icon: {
-                        show: false,
-                        ratings: true,
+                    thumbnail: {
+                        show: true,
+                        ratings: false,
                         description: true,
                         descriptionCharacters: 100
                     },
@@ -28,7 +33,11 @@
 		</script>
 	</head>
 	<body>
-        <div id="playlists"></div>
+        <!--<div id="search">
+            <input type="text" id="search-txt" />
+            <button id="search-btn">Search</button>
+        </div>-->
         <div id="videos"></div>
+        <div id="playlists"></div>
 	</body>
 </html>
