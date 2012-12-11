@@ -5,35 +5,58 @@ body
     color: #333333;
     background: #DEDEDE;
 }
+
 h3
 {
     font-size: 13px;
     margin: 0;
 }
-header,
-footer,
-nav,
-section {
-    display: block;
-}
-#player
-{
-    float: left;
-}
-#playlists span
+
+/***************** PLAYLIST GLOBAL STYLES **********************/
+
+.playlists span
 {
     cursor: pointer;
+    display: block;
 }
-#playlists div:hover
+
+.playlists div:hover
 {
     background: #FFFFFF;
 }
-#videos
+
+.playlists
 {
-     width: 75%;
-     float: left;   
+    width: 25%;
+    float: right;
 }
-#videos a
+
+.playlists ul
+{
+    list-style-type: none;
+}
+
+.playlists ul span
+{
+    display: block;
+}
+
+.playlists li
+{
+    display: inline-block;
+    width: 200px;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+/***************** \ PLAYLIST GLOBAL STYLES  **********************/
+
+
+/***************** VIDEO GLOBAL STYLES **********************/
+
+
+.videos a
 {
     color: #333333;
     text-decoration: none;
@@ -41,26 +64,16 @@ section {
     display: inline-block;
 }
 
-#videos .video p
+.videos .video p
 {
     margin: 0;
 }
 
-#videos .video:hover, #playlists li:hover
-{
-    box-shadow: -5px 5px 10px #555555;
-    background: #FFFFFF;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    right: 1px;
-}
-#videos img
+.videos img
 {
     cursor: pointer;
 }
+
 .video_time
 {
     position: absolute;
@@ -73,15 +86,23 @@ section {
     display: inline-block;
 	color: #DEDEDE;
 }
+
+.video-img
+{
+    position: relative;
+}
+
 .rating span
 {
 	height: 5px;
 }
+
 .likes, .dislikes
 {
 	margin: 0;
 	padding: 0;
 }
+
 .likes
 {
     border-radius: 5px 0 0 5px;
@@ -89,6 +110,7 @@ section {
 	float: left;
 	border-right: 1px solid white;
 }
+
 .dislikes
 {
     border-radius: 0 5px 5px 0;
@@ -96,6 +118,11 @@ section {
 	float: right;
 	border-left: 1px solid white;
 }
+
+/***************** \ VIDEO GLOBAL STYLES  **********************/
+
+
+/***************** PAGING GLOBAL STYLES  **********************/
 
 #pager span
 {
@@ -123,73 +150,71 @@ section {
     border-radius: 2px;   
 }
 
-.video-img
-{
-    position: relative;
-}
+/***************** \ PAGING GLOBAL STYLES  **********************/
 
-#playlists ul
-{
-    list-style-type: none;
-}
-
-#playlists ul span
-{
-    display: block;
-}
-
-#playlists li
-{
-    display: inline-block;
-    width: 200px;
-    padding: 10px;
-    cursor: pointer;
-    position: relative;
-}
-
-#playlists
-{
-    width: 25%;
-    float: right;
-}
 
 /***************** THEME A  **********************/
 
-.video[data-theme="a"]
+.videos[data-theme="a"]
+{
+     width: 75%;
+     float: left;   
+}
+
+.videos[data-theme="a"] .video
 {
     clear: both;
     margin: 10px 0;
     max-width: 1000px;
 }
 
-.video[data-theme="a"] h2
+.videos[data-theme="a"] .video h2
 {
     margin: 0;
     font-weight: normal;
 }
 
-.video[data-theme="a"] span
+.videos[data-theme="a"] .video span
 {
     display: block;
 }
 
-.video[data-theme="a"] > a > div
+.videos[data-theme="a"] .video > a > div
 {
     
 }
 
-.video[data-theme="a"] .video-img
+.videos[data-theme="a"] .video .video-img
 {
     float: left;
-    margin-right: 20px;
+    width: 25%;
 }
 
-.video[data-theme="a"] .video-details
+.videos[data-theme="a"] .video .video-details
 {
     padding: 20px;
+    width: 70%;
+    float: right;
 }
 
-.video-count
+.videos[data-theme="a"] img
+{
+     width: 100%;  
+}
+
+.videos[data-theme="a"] .video:hover, .playlists[data-theme="a"] li:hover
+{
+    box-shadow: -5px 5px 10px #555555;
+    background: #FFFFFF;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    right: 1px;
+}
+
+.playlists[data-theme="a"] .video-count
 {
     font-size: 11px !important;
     background: #000000;
@@ -201,7 +226,5 @@ section {
     top: 50%;
     right: 25%;
 }
-
-
 
 /***************** \THEME A  **********************/

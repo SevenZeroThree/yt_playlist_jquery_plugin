@@ -14,18 +14,20 @@
 		        $.youtube.theme = 'a';
 
 		        $('#playlists').playlists({
-                    numberOfPlaylists: 10,
-                    thumbnail: {
-                        show: true
-                    }
-                });
+		            numberOfPlaylists: 5,
+		            thumbnail: {
+		                show: true
+		            }
+		        });
+
                 $('#videos').videos({
-                    videosPerPage: 8,
+                    videosPerPage: 5,
                     thumbnail: {
                         show: true,
-                        ratings: false,
+                        ratings: true,
                         description: true,
-                        descriptionCharacters: 100
+                        descriptionCharacters: 500,
+                        views: true
                     },
 		            titleCharacters: 50
                 });
