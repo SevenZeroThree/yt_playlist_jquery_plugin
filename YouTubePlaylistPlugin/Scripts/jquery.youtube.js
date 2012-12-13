@@ -18,6 +18,7 @@
                 videosPerPage: 10,
                 titleCharacters: 100,
                 hdOnly: false,
+                recent: false,
                 videoThumbnail: {
                     show: true,
                     ratings: true,
@@ -36,7 +37,9 @@
                 // bind events
                 events.bind();
 
-                _mostRecent();
+                if (defaults.recent) {
+                    _mostRecent();
+                }
             },
             _video = function (video) {
                 var watchURL = 'http://www.youtube.com/watch?v=';
@@ -252,11 +255,8 @@
                 element.html('');
 
                 $.getJSON(url, function (data) {
-                    var count = 0;
                     $.each(data.feed.entry, function (i, item) {
                         if (item != null) {
-                            count++;
-
                             var newVid = new _video(item);
 
                             if (settings.videoThumbnail.show)
@@ -266,10 +266,10 @@
                         }
                     });
 
-                    element.append(_buildPager(startIndex, count));
+                    element.append(_buildPager(startIndex));
                 });
             },
-            _buildPager = function (currentPage, videosOnPage) {
+            _buildPager = function (currentPage) {
                 var builder = '<div id="pager" data-theme="' + $.youtube.theme + '">';
 
                 // Determine how many pages there should be
@@ -294,9 +294,8 @@
 
                     // Build Next button
                     // We are NOT on the first page
-                    if (numberOfVideos > settings.videosPerPage)
-                        if (videosOnPage == settings.videosPerPage)
-                            builder += '<span class="button" start-index="' + (parseInt(currentPage) + parseInt(settings.videosPerPage)) + '">Next</span>';
+                    if (numberOfVideos > (settings.videosPerPage * activePage))
+                        builder += '<span class="button" start-index="' + (parseInt(currentPage) + parseInt(settings.videosPerPage)) + '">Next</span>';
                 }
 
                 builder += '</div>';
@@ -490,40 +489,15 @@
 
                                 $.getJSON(test, function (data) {
                                     var videos = '';
-                                    videos += '<li>';
+                                    videos += '<li id="' + newPlaylist.id + '" data-value="' + newPlaylist.numberOfVideos + '">';
                                     videos += '<h4>' + newPlaylist.title + '</h4>';
-                                    $.each(data.feed.entry, function (c, video) {
-                                        //$asdf.append(
-                                        //    $('<img/>',
-                                        //        {
-                                        //            'src': img + video.link[1].href.split('/')[6] + '/default.jpg'
-                                        //        }
-                                        //    )
-                                        //);
 
+                                    $.each(data.feed.entry, function (c, video) {
                                         videos += '<img src="' + img + video.link[1].href.split('/')[6] + '/default.jpg" />';
-                                        //videos += '<span>' + $.youtube.username + '</span>';
-                                        videos += '<span class="video-count">' + newPlaylist.numberOfVideos + ' videos</span>';
                                     });
+
+                                    videos += '<span class="video-count">' + newPlaylist.numberOfVideos + ' videos</span>';
                                     videos += '</li>';
-                                    //element
-                                    //    .append(
-                                    //        $('<div/>',
-                                    //            {
-                                    //                'class': 'playlist-thumb'
-                                    //            }
-                                    //        )
-                                    //        .append(
-                                    //            $('<h4/>',
-                                    //                {
-                                    //                    text: newPlaylist.title
-                                    //                }
-                                    //            )
-                                    //        )
-                                    //        .append(
-                                    //            $asdf
-                                    //        )
-                                    //    );
 
                                     $(videos).appendTo(element);
                                 });
