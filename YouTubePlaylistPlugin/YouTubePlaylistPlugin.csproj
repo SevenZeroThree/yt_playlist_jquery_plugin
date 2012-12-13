@@ -74,9 +74,7 @@
     <Content Include="Content\fancybox\jquery.fancybox.css" />
     <Content Include="Content\fancybox\jquery.fancybox.js" />
     <Content Include="Content\fancybox\jquery.fancybox.pack.js" />
-    <Content Include="test.html" />
     <Content Include="index.html" />
-    <Content Include="Scripts\test.js" />
     <Content Include="Scripts\jquery.youtube.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

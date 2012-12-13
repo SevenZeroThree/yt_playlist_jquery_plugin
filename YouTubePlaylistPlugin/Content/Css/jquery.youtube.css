@@ -43,11 +43,12 @@ h3
 
 .playlists li
 {
-    display: inline-block;
-    width: 200px;
+    /*display: inline-block;
+    width: 200px;*/
     padding: 10px;
     cursor: pointer;
     position: relative;
+    list-style-type: none;
 }
 
 /***************** \ PLAYLIST GLOBAL STYLES  **********************/
@@ -225,6 +226,16 @@ h3
     position: absolute;
     top: 50%;
     right: 25%;
+}
+
+.playlists[data-theme="a"] img
+{
+    width: 20%;
+}
+
+.playlists[data-theme="a"] h4
+{
+    margin: 0;
 }
 
 /***************** \THEME A  **********************/
